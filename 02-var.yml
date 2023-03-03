@@ -1,47 +1,46 @@
-- name: Play variables
+- name: Play Variables
   hosts: localhost
   vars:
-     URL: play.example.com
+    URL: play.example.com
   tasks:
-    - name: Print play variables
+    - name: Print Play Variable
       ansible.builtin.debug:
-        msg: URL= {{ URL }}
+        msg: URL = {{ URL }}
 
-- name: Play variables from files
+- name: Play Variables from Files
   hosts: localhost
-  #vars_files works only on play level
+  ## vars_files works only on play level
   vars_files:
-        vars.yml
+    - var.yml
   tasks:
-        - name: Print play variables from files
-          ansible.builtin.debug:
-            msg: URL= {{ URL }}
+    - name: Print Play Variable from File
+      ansible.builtin.debug:
+        msg: URL = {{ URL }}
 
-  name: Task level variables
+- name: Task Level variables
   hosts: localhost
   tasks:
-    - name: Print play variables from files
-      vars:
+    - name: Print Play Variable
+      vars: ## THese vars are only for this task, next task on same play cannot access it
         URL: task.example.com
       ansible.builtin.debug:
-        msg: URL= {{ URL }}
+        msg: URL = {{ URL }}
 
-  name: Vars from inventory
+- name: Vars from Inventory
   hosts: all
   tasks:
-    - name: Print play variables from inventory
+    - name: Print Play Variable from Inventory
       ansible.builtin.debug:
-        msg: "URL= {{ URL }}, Hostname of server= {{ansible_hostname}}"
+        msg: "URL = {{ URL }}, Hostname of Server = {{ ansible_hostname }}"
 
 
-  name: Register a variable
+- name: Register a variable
   hosts: localhost
   tasks:
-      name: Get uptime output
+    - name: Get uptime output
       ansible.builtin.shell: uptime
       register: out
 
-      name: Print out
+    - name: Print out
       ansible.builtin.debug:
-       msg:  "{{ out }}"
-
+        msg: "{{ out }}"
