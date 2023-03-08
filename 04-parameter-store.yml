@@ -1,4 +1,4 @@
-- name: Print parameters
+- name: Print parameter
   hosts: localhost
   tasks:
     - name: Print test1
